@@ -1,23 +1,28 @@
-import logo from './logo.svg';
+import React, { useState } from 'react'
+import ColorBlock from './ColorBlock';
+import ColorForm from './ColorForm';
 import './App.css';
 
 function App() {
+  //array is now a State value, which is expected to change
+  let [colors, setColors] = useState(['violet', 'blue', 'lightblue', 'green', 'greenyellow', 'yellow', 'orange', 'red'])
+  //mapping over colors to select the one the user has selected
+  let colorMap = colors.map((color, i) => {
+    return (
+      //sending props to ColorBlock
+      <ColorBlock key={i} color={color} />
+    )
+  })
+   // using the spread operator to make a copy of the array without the data being strictly inside an array
+   const addColor = (newColor) =>{
+    setColors([...colors,newColor])
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {/* returning the colorMap function, which is why it's in curly braces */}
+      {colorMap}
+      {/*passing ColorForm props to add colors to the colors array. This will concatenate the new color on the end. */}
+      <ColorForm addColor={addColor}/>
     </div>
   );
 }
